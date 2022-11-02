@@ -10,7 +10,7 @@ The current work in [CyBERTron-LM](https://github.com/microsoft/CyBERTron-LM) in
 ## Reference
 
 If you find this project useful in your work, you can cite the following papers if there's a need:
-* [1] ***Transcormer**: Transcormer: Transformer for Sentence Scoring with Sliding Language Modeling*, Kaitao Song, Yichong Leng, Xu Tan, Yicheng Zou, Tao Qin, Dongsheng Li, **NeurIPS 2022**.
+* [1] ***Transcormer**: Transformer for Sentence Scoring with Sliding Language Modeling*, Kaitao Song, Yichong Leng, Xu Tan, Yicheng Zou, Tao Qin, Dongsheng Li, **NeurIPS 2022**.
 
 ## Contributing
 

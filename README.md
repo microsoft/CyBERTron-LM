@@ -1,14 +1,10 @@
-# Project
+# CyBERTron-LM
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+CyBERTron-LM is a research project on language model pre-training. It collects some Transformer-based Pre-trained Models for solving NLP tasks (e.g., understanding, generation or scoring). 
 
-As the maintainer of this project, please make a few updates:
+The current work in [CyBERTron-LM](https://github.com/microsoft/CyBERTron-LM) include:
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+
 
 ## Contributing
 

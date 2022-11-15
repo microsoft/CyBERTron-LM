@@ -1,23 +1,27 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import math
-import numpy as np
 
 import torch
-import torch.nn.functional as F
 
 from fairseq import utils, metrics, modules
 from fairseq.criterions import FairseqCriterion, register_criterion
-from .model_utils import compute_SLM
 
 
 def accuracy(output, target):
+    """ Calculate accuracy for prediction """
     with torch.no_grad():
         _, pred = output.topk(1, -1)
         correct = pred.view(-1).eq(target.view(-1))
     return correct.sum()
 
 
-@register_criterion("score_criterion")
-class ScoreCriterion(FairseqCriterion):
+@register_criterion("sliding_lm")
+class SlidingLMLoss(FairseqCriterion):
+    """
+        Implementation for the loss used in sliding language model (SLM) training.
+    """
 
     def __init__(self, task, tpu=False):
         super().__init__(task)
@@ -27,10 +31,7 @@ class ScoreCriterion(FairseqCriterion):
         targets = sample['net_input']['src_tokens']
         sample_size = sample['ntokens']
 
-        logits = compute_SLM(
-            model, **sample["net_input"]
-        )[0]
-
+        logits, _ = model.compute(**sample["net_input"])
         loss = modules.cross_entropy(
             logits.view(-1, logits.size(-1)),
             targets.view(-1),

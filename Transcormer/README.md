@@ -5,8 +5,20 @@
 
 ## Requirements
 ```bash
-pip install fairseq==0.10.2 torch==1.9.0
+pip install fairseq==0.10.2 torch==1.9.0 transformers
 ```
+
+## Data
+We use the same data pipeline as [RoBERTa](https://github.com/facebookresearch/fairseq/blob/v0.10.2/examples/roberta/README.pretraining.md) to process corpus. For example, we use [WikiText-103 dataset](https://www.salesforce.com/products/einstein/ai-research/the-wikitext-dependency-language-modeling-dataset/) as the training corpus (you can switch it to wikipedia + bookcorpus as the pre-training corpus for reproducing). 
+
+First download the dataset:
+```bash
+wget https://s3.amazonaws.com/research.metamind.io/wikitext/wikitext-103-raw-v1.zip
+unzip wikitext-103-raw-v1.zip
+```
+
+Next, encode it with the RoBERTa or BERT tokenizer:
+
 
 ## Training 
 

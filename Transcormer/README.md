@@ -11,14 +11,36 @@ pip install fairseq==0.10.2 torch==1.9.0 transformers
 ## Data
 We use the same data pipeline as [RoBERTa](https://github.com/facebookresearch/fairseq/blob/v0.10.2/examples/roberta/README.pretraining.md) to process corpus. For example, we use [WikiText-103 dataset](https://www.salesforce.com/products/einstein/ai-research/the-wikitext-dependency-language-modeling-dataset/) as the training corpus (you can switch it to wikipedia + bookcorpus as the pre-training corpus for reproducing). 
 
-First download the dataset:
+First, download the dataset and tokenize it with the BERT or RoBERTa tokenizer:
 ```bash
 wget https://s3.amazonaws.com/research.metamind.io/wikitext/wikitext-103-raw-v1.zip
 unzip wikitext-103-raw-v1.zip
+
+for SPLIT in train valid test; do \
+    python encode.py \
+        --inputs wikitext-103-raw/wiki.${SPLIT}.raw \
+        --outputs wikitext-103-raw/wiki.${SPLIT}.bpe \
+        --keep-empty \
+        --tokenizer bert-base-uncased \
+        --workers 60; \
+done
 ```
-
-Next, encode it with the RoBERTa or BERT tokenizer:
-
+You can replace tokenizer as `gpt2` to tokenize corpus as RoBERTa. Next, we need to binarize data, and the command is as:
+```bash
+fairseq-preprocess \
+    --only-source \
+    --srcdict dict.bert.txt \
+    --trainpref wikitext-103-raw/wiki.train.bpe \
+    --validpref wikitext-103-raw/wiki.valid.bpe \
+    --testpref wikitext-103-raw/wiki.test.bpe \
+    --destdir data-bin/wikitext-103 \
+    --workers 60
+```
+We provide dictionary file based on the different tokenizers (`bert` or `roberta`) as:
+| Tokenizer | Dictionary |
+|---|---|
+| BERT    | [dict.bert.txt](https://msramldl.blob.core.windows.net/modelrelease/Transcormer/dict.bert.txt) |
+| RoBERTa | [dict.roberta.txt](https://msramldl.blob.core.windows.net/modelrelease/Transcormer/dict.roberta.txt) |
 
 ## Training 
 ```bash

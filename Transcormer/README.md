@@ -36,13 +36,14 @@ fairseq-preprocess \
     --destdir data-bin/wikitext-103 \
     --workers 60
 ```
-We provide dictionary file based on the different tokenizers (`bert` or `roberta`) as:
+We provide two dictionary files for different tokenizers (`bert` and `roberta`) as:
 | Tokenizer | Dictionary |
 |---|---|
 | BERT    | [dict.bert.txt](https://msramldl.blob.core.windows.net/modelrelease/Transcormer/dict.bert.txt) |
 | RoBERTa | [dict.roberta.txt](https://msramldl.blob.core.windows.net/modelrelease/Transcormer/dict.roberta.txt) |
 
 ## Training 
+Different like BERT/RoBERTa training, `Transcormer` is recommended to train at a sentence level. Therefore, under a 32GB V100, our training script is as follows:
 ```bash
 TOTAL_UPDATES=125000    # Total number of training steps
 WARMUP_UPDATES=10000    # Warmup the learning rate over this many updates
@@ -62,6 +63,32 @@ fairseq-train --fp16 $DATA_DIR \
     --dropout 0.1 --attention-dropout 0.1 --weight-decay 0.01 \
     --update-freq $UPDATE_FREQ --max-tokens 4096 \
     --max-update $TOTAL_UPDATES --log-format simple --log-interval 100
+```
+You can reduce the value of `max-tokens` if the memory of GPU is smaller than 32GB. 
+
+Furthermore, we support our model `Transcormer` to train from a pre-trained BERT model for acceleration. If you have a pre-trained BERT model `bert.pt`, so the training script is as:
+```bash
+TOTAL_UPDATES=125000    # Total number of training steps
+WARMUP_UPDATES=10000    # Warmup the learning rate over this many updates
+PEAK_LR=0.0001          # Peak learning rate, adjust as needed
+TOKENS_PER_SAMPLE=512   # Max sequence length
+UPDATE_FREQ=16          # Increase the batch size 16x
+RESTORE_MODEL=bert.pt   # Pre-trained BERT model
+
+DATA_DIR=data-bin/wikitext-103
+USER_DIR=Transcormer
+
+fairseq-train --fp16 $DATA_DIR \
+    --user-dir $USER_DIR \
+    --task sliding_lm --criterion sliding_lm \
+    --arch transcormer --sample-break-mode eos --tokens-per-sample $TOKENS_PER_SAMPLE \
+    --optimizer adam --adam-betas '(0.9,0.98)' --adam-eps 1e-6 --clip-norm 0.0 \
+    --lr-scheduler polynomial_decay --lr $PEAK_LR --warmup-updates $WARMUP_UPDATES --total-num-update $TOTAL_UPDATES \
+    --dropout 0.1 --attention-dropout 0.1 --weight-decay 0.01 \
+    --update-freq $UPDATE_FREQ --max-tokens 4096 \
+    --max-update $TOTAL_UPDATES --log-format simple --log-interval 100 \
+    --restore-file $RESTORE_MODEL \
+    --reset-optimizer --reset-dataloader --reset-meters \
 ```
 
 ## Inference

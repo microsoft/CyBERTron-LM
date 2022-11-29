@@ -92,6 +92,16 @@ fairseq-train --fp16 $DATA_DIR \
 ```
 
 ## Inference
+We provide pre-trained [transcormer model](https://msramldl.blob.core.windows.net/modelrelease/Transcormer/transcormer.base.tar.gz) for evaluation. The running script is as:
+```bash
+wget -c https://msramldl.blob.core.windows.net/modelrelease/Transcormer/transcormer.base.tar.gz
+tar -zxvf transcormer.base.tar.gz
+
+TEXT=test.txt # Your input text for language evaluation
+MODEL=transcormer.base/transcormer.base.pt
+
+python inference.py --input $TEXT --model $MODEL --data-dir $MODEL
+```
 
 ## Citation
 If you find Transcormer useful in your work, you can cite the paper as below:

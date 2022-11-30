@@ -98,9 +98,10 @@ wget -c https://msramldl.blob.core.windows.net/modelrelease/Transcormer/transcor
 tar -zxvf transcormer.base.tar.gz
 
 TEXT=test.txt # Your input text for language evaluation
-MODEL=transcormer.base/transcormer.base.pt
+DATA=transcormer.base
+MODEL=$DATA/transcormer.base.pt
 
-python inference.py --input $TEXT --model $MODEL --data-dir $MODEL
+python inference.py --input $TEXT --model $MODEL --data-dir $DATA
 ```
 
 ## Citation

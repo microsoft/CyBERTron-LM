@@ -1,6 +1,6 @@
 # CyBERTron-LM
 
-CyBERTron-LM is a research project on language model pre-training. It collects some Transformer-based Pre-trained Models for solving NLP tasks (e.g., understanding, generation or scoring). 
+CyBERTron-LM is a research project on NLP. It collects some Models for solving NLP tasks (e.g., pre-training, understanding, generation or etc). 
 
 The current work in [CyBERTron-LM](https://github.com/microsoft/CyBERTron-LM) include:
 * Language Scoring

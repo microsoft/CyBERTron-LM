@@ -5,12 +5,13 @@ CyBERTron-LM is a research project on NLP. It collects some Models for solving N
 The current work in [CyBERTron-LM](https://github.com/microsoft/CyBERTron-LM) include:
 * Language Scoring
   + Transcormer: [Transcormer](https://arxiv.org/abs/2205.12986)
-
+  + DiffusionNER: [DiffusionNER](https://arxiv.org/abs/2305.13298)
 
 ## Reference
 
 If you find this project useful in your work, you can cite the following papers if there's a need:
 * [1] ***Transcormer**: Transformer for Sentence Scoring with Sliding Language Modeling*, Kaitao Song, Yichong Leng, Xu Tan, Yicheng Zou, Tao Qin, Dongsheng Li, **NeurIPS 2022**.
+* [2] ***DiffusionNER**: Boundary Diffusion for Named Entity Recognition*, Yongliang Shen, Kaitao Song, Xu Tan, Dongsheng Li, Weiming Lu, Yueting Zhuang, **ACL 2023**. 
 
 ## Contributing
 
